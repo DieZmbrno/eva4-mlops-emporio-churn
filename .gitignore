@@ -1,0 +1,21 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Archivos Python compilados
+__pycache__/
+*.pyc
+
+# Archivos de logs
+*.log
+
+# Datos temporales
+*.tmp
+*.cache
+
+# Archivos de notebook checkpoints
+.ipynb_checkpoints/
+
+# Docker
+*.pid
