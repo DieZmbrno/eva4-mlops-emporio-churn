@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Arquitectura MLOps - Emporio Churn">
+    <mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Sistema de Origen -->
+        <mxCell id="2" value="Sistema de Origen&#xa;(datos simulados)&#xa;users / orders" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="40" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Entrenamiento (train_model.py) -->
+        <mxCell id="3" value="Entrenamiento&#xa;(train_model.py)&#xa;&#xa;- Limpieza y features&#xa;- Entrena varios modelos&#xa;- Selección del mejor&#xa;- Exporta artefacto modelo_churn_rf_v1.joblib" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="260" y="170" width="260" height="160" as="geometry"/>
+        </mxCell>
+
+        <!-- API de Inferencia -->
+        <mxCell id="4" value="API de Inferencia&#xa;(FastAPI + Uvicorn)&#xa;main.py&#xa;&#xa;- Carga modelo_churn_rf_v1.joblib&#xa;- Endpoint /predict&#xa;- Endpoint /health" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="260" y="370" width="260" height="160" as="geometry"/>
+        </mxCell>
+
+        <!-- Contenedor Docker -->
+        <mxCell id="5" value="Contenedor Docker&#xa;Imagen: emporio-churn-api:latest&#xa;&#xa;- Incluye API + modelo + dependencias&#xa;- Expone puerto 8000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="260" y="570" width="260" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- Consumidores externos -->
+        <mxCell id="6" value="Consumidores externos&#xa;&#xa;- Aplicaciones web o scripts&#xa;- Sistemas de BI / reporting&#xa;&#xa;Consumen:&#xa;→ POST /predict&#xa;→ GET /health" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="580" y="400" width="260" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- Flecha: Sistema de origen -> Entrenamiento -->
+        <mxCell id="7" style="endArrow=block;endFill=1;strokeColor=#000000;" edge="1" parent="1" source="2" target="3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Flecha: Entrenamiento -> API (artefacto) -->
+        <mxCell id="8" value="Artefacto modelo_churn_rf_v1.joblib" style="endArrow=block;endFill=1;strokeColor=#000000;rounded=0;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="3" target="4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="0" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Flecha: API -> Contenedor Docker -->
+        <mxCell id="9" value="Empaquetamiento con Dockerfile" style="endArrow=block;endFill=1;strokeColor=#000000;rounded=0;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="4" target="5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Flecha: Contenedor Docker -> Consumidores externos -->
+        <mxCell id="10" value="Puerto 8000" style="endArrow=block;endFill=1;strokeColor=#000000;rounded=0;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="5" target="6">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
